@@ -129,7 +129,7 @@ export async function upsertDietaryPreferences(
       )
       VALUES (
         ${userId}, ${preferences.isVegetarian}, ${preferences.isVegan},
-        ${preferences.isPescatarian}, ${preferences.allergies},
+        ${preferences.isPescatarian}, ${JSON.stringify(preferences.allergies)},
         ${preferences.customInstructions}, CURRENT_TIMESTAMP
       )
       ON CONFLICT (user_id)
@@ -137,7 +137,7 @@ export async function upsertDietaryPreferences(
         is_vegetarian = ${preferences.isVegetarian},
         is_vegan = ${preferences.isVegan},
         is_pescatarian = ${preferences.isPescatarian},
-        allergies = ${preferences.allergies},
+        allergies = ${JSON.stringify(preferences.allergies)},
         custom_instructions = ${preferences.customInstructions},
         updated_at = CURRENT_TIMESTAMP
       RETURNING *
@@ -197,7 +197,7 @@ export async function saveRecipe(
         ${JSON.stringify(recipe.ingredients)}, ${JSON.stringify(recipe.instructions)},
         ${recipe.cookTime}, ${recipe.difficulty}, ${recipe.servings},
         ${JSON.stringify(recipe.nutritionTotal)}, ${JSON.stringify(recipe.nutritionPerServing)},
-        ${recipe.cuisineType}, ${recipe.recipeStyle}, ${[]}
+        ${recipe.cuisineType}, ${recipe.recipeStyle}, ${JSON.stringify([])}
       )
       RETURNING *
     `;
