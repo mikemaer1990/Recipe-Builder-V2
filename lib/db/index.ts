@@ -152,8 +152,24 @@ export async function upsertDietaryPreferences(
 // Saved Recipes Queries
 export async function getSavedRecipes(userId: string): Promise<SavedRecipe[]> {
   try {
-    const result = await sql<SavedRecipe>`
-      SELECT * FROM saved_recipes
+    const result = await sql<any>`
+      SELECT
+        id,
+        user_id as "userId",
+        recipe_name as "recipeName",
+        description,
+        ingredients,
+        instructions,
+        cook_time as "cookTime",
+        difficulty,
+        servings,
+        nutrition_total as "nutritionTotal",
+        nutrition_per_serving as "nutritionPerServing",
+        cuisine_type as "cuisineType",
+        recipe_style as "recipeStyle",
+        tags,
+        saved_at as "savedAt"
+      FROM saved_recipes
       WHERE user_id = ${userId}
       ORDER BY saved_at DESC
     `;
@@ -169,8 +185,24 @@ export async function getSavedRecipeById(
   userId: string
 ): Promise<SavedRecipe | null> {
   try {
-    const result = await sql<SavedRecipe>`
-      SELECT * FROM saved_recipes
+    const result = await sql<any>`
+      SELECT
+        id,
+        user_id as "userId",
+        recipe_name as "recipeName",
+        description,
+        ingredients,
+        instructions,
+        cook_time as "cookTime",
+        difficulty,
+        servings,
+        nutrition_total as "nutritionTotal",
+        nutrition_per_serving as "nutritionPerServing",
+        cuisine_type as "cuisineType",
+        recipe_style as "recipeStyle",
+        tags,
+        saved_at as "savedAt"
+      FROM saved_recipes
       WHERE id = ${recipeId} AND user_id = ${userId}
       LIMIT 1
     `;

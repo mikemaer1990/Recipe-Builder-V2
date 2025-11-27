@@ -68,9 +68,19 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async jwt({ token, user, account }) {
-      if (user) {
+      // For credentials provider, user.id is already the database ID
+      if (user && !account) {
         token.sub = user.id;
       }
+
+      // For Google OAuth, we need to fetch the database user ID
+      if (account?.provider === "google") {
+        const dbUser = await getUserByGoogleId(account.providerAccountId);
+        if (dbUser) {
+          token.sub = dbUser.id;
+        }
+      }
+
       return token;
     },
   },
