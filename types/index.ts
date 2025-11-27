@@ -63,9 +63,20 @@ export interface FullRecipe {
   nutritionPerServing: NutritionInfo;
 }
 
-export interface SavedRecipe extends FullRecipe {
+export interface SavedRecipe {
   id: string;
   userId: string;
+  recipeName: string;
+  description: string;
+  cookTime: string;
+  difficulty: "Easy" | "Medium" | "Hard";
+  servings: number;
+  ingredients: Ingredient[];
+  instructions: string[];
+  cuisineType: string;
+  recipeStyle: string;
+  nutritionTotal: NutritionInfo;
+  nutritionPerServing: NutritionInfo;
   tags: string[];
   savedAt: Date;
 }
